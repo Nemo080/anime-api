@@ -1,0 +1,18 @@
+body {
+    background-color:mistyrose;
+}
+
+h1{
+    color:darkcyan;
+    font-family: Rubik Doodle Triangles;
+    font-size: 50px;
+    padding-top: 10px;
+}
+h2{
+    font-family: Lucida Console, Courier New, monospace;
+    padding-bottom: 30px;
+}
+
+p{
+    font-family: Verdana, Arial, Helvetica, sans-serif 
+}

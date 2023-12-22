@@ -20,26 +20,45 @@ function display(animeArray){
       return 0;
     }
   })
-  console.log(sortedAnime)
+  console.log(sortedAnime.slice(1))
+  
 
   // filtering the anime to show data from after 2022
-  let filteredArray = animeArray.filter((anime) => {
+  let filteredArray = sortedAnime.filter((anime) => {
     return anime.aired.from.slice(0, 4) >= "2022"
     
   })  
   console.log(filteredArray)
+
+  filteredArray = filteredArray.slice(1);
   
   // appending the title and the image of the anime on the body of the browser with the use of map(). map() creates a new array with out altering the original array
-  animeArray.map((anime) => {
-    const newTitle = document.createElement("p")
+  filteredArray.map((anime) => {
+    const animeContainer = document.createElement("div");
+    animeContainer.style.display = "flex"; 
+    animeContainer.style.marginBottom = "50px";
+
+    const newTitle = document.createElement("h2")
     newTitle.innerText = anime.title;
+    newTitle.style.marginLeft = "30px"
     document.body.append(newTitle)
+
     const newImg = document.createElement("img")
     newImg.src=anime.images.jpg.image_url;
-    document.body.append(newImg)
+    newImg.style.width = "20%"
+    newImg.style.margin = "auto";
+    animeContainer.append(newImg);
+
+    const description = document.createElement("p")
+    description.innerText = anime.synopsis;
+    description.style.width = "40%";
+    description.style.margin = "auto";
+    animeContainer.append(description);
+
+    document.body.append(animeContainer);
   })
 
-  
+  document.body.style.textAlign = "center";
 }
 
 display(animeArray)
