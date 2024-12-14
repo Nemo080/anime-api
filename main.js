@@ -20,12 +20,12 @@ function display(animeArray){
       return 0;
     }
   })
-  console.log(sortedAnime.slice(1))
+  console.log(sortedAnime)
   
 
   // filtering the anime to show data from after 2022
   let filteredArray = sortedAnime.filter((anime) => {
-    return anime.aired.from.slice(0, 4) >= "2022"
+    return anime.aired && anime.aired.from && anime.aired.from.slice(0, 4) >= "2022"
     
   })  
   console.log(filteredArray)
@@ -34,29 +34,49 @@ function display(animeArray){
   
   // appending the title and the image of the anime on the body of the browser with the use of map(). map() creates a new array with out altering the original array
   filteredArray.map((anime) => {
-    const animeContainer = document.createElement("div");
-    animeContainer.style.display = "flex"; 
-    animeContainer.style.marginBottom = "50px";
 
-    const newTitle = document.createElement("h2")
+    const animeContainer = document.createElement('div');
+    animeContainer.className = 'anime-container';
+
+    const infoContainer = document.createElement('div');
+    infoContainer.className = 'info-container';
+
+    const newImg = document.createElement('img');
+    newImg.src = anime.images.jpg.image_url;
+    newImg.className = 'anime-image';
+
+    const newTitle = document.createElement('h2');
     newTitle.innerText = anime.title;
-    newTitle.style.marginLeft = "30px"
-    document.body.append(newTitle)
+    newTitle.className = 'anime-title';
 
-    const newImg = document.createElement("img")
-    newImg.src=anime.images.jpg.image_url;
-    newImg.style.width = "20%"
-    newImg.style.margin = "auto";
-    animeContainer.append(newImg);
+    const button = document.createElement('button');
+    button.innerText = 'Show Description';
+    button.className = 'anime-button';
 
-    const description = document.createElement("p")
-    description.innerText = anime.synopsis;
-    description.style.width = "40%";
-    description.style.margin = "auto";
-    animeContainer.append(description);
+    // Add a click event to the button to toggle the description
+    button.addEventListener('click', () => {
+      if (!animeContainer.querySelector('.description')) {
+        const description = document.createElement('p');
+        description.innerText = anime.synopsis;
+        description.className = 'description'; // Class for easy reference
+        animeContainer.appendChild(description);
+        button.innerText = 'Hide Description';
+      } else {
+        const description = animeContainer.querySelector('.description');
+        description.remove(); // Remove the description from the DOM
+        button.innerText = 'Show Description';
+      }
 
+    });
+    
+    // imgContainer.appendChild(newImg);
+    infoContainer.append(newTitle, button);
+    animeContainer.append(infoContainer);
     document.body.append(animeContainer);
-  })
+
+    animeContainer.append(newTitle, newImg, button);
+    document.body.append(animeContainer);
+  });
 
   document.body.style.textAlign = "center";
 }
